@@ -1,9 +1,10 @@
 from typing import List, Dict
-import copy
 
 """
 그래프 순회
 """
+
+
 def solution(edges: List) -> List:
     node_set = set()
     for edge in edges:
@@ -17,7 +18,7 @@ def solution(edges: List) -> List:
     for s, e in edges:
         graph_dict[s].append(e)
 
-    # count in, out edges for each node
+    # count in, out edges for each node to get first node
     in_edges = dict(zip(graph_keys, [0] * len(node_set)))
     out_edges = dict(zip(graph_keys, [0] * len(node_set)))
     for k, values in graph_dict.items():
@@ -25,18 +26,27 @@ def solution(edges: List) -> List:
         for v in values:
             in_edges[v] += 1
 
+    first_node = 0
     donut, stick, eight = 0, 0, 0
     for k, ie, oe in zip(in_edges.keys(), in_edges.values(), out_edges.values()):
-        if oe == 0:
-            stick += 1
-        elif oe >= 2:
-            if ie == 0:
-                first_node = k
-            elif ie >= 2:
-                eight += 1
+        if oe >= 2 and ie == 0: first_node = k
+
+    queue = [first_node]
+    visited = dict(zip(graph_keys, [False] * len(node_set)))
+
+    while queue:
+        node = queue.pop()
+
+        if not visited[node]:
+            visited[node] = True
+
+            if out_edges[node] == 0: stick += 1
+            elif in_edges[node] >= 2 and out_edges[node] >= 2: eight += 1;
+            queue.extend(graph_dict[node])
 
     donut = out_edges[first_node]-stick-eight
     return [first_node, donut, stick, eight]
+
 
 
 if __name__ == '__main__':
