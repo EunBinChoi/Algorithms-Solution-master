@@ -4,7 +4,6 @@ from typing import List, Dict
 그래프 순회
 """
 
-
 def solution(edges: List) -> List:
     node_set = set()
     for edge in edges:
