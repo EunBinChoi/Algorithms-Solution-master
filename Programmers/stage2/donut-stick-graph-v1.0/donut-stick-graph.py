@@ -27,13 +27,10 @@ def solution(edges: List) -> List:
 
     donut, stick, eight = 0, 0, 0
     for k, ie, oe in zip(in_edges.keys(), in_edges.values(), out_edges.values()):
-        if oe == 0:
-            stick += 1
+        if oe == 0: stick += 1
         elif oe >= 2:
-            if ie == 0:
-                first_node = k
-            elif ie >= 2:
-                eight += 1
+            if ie == 0: first_node = k
+            elif ie >= 2: eight += 1
 
     donut = out_edges[first_node]-stick-eight
     return [first_node, donut, stick, eight]
