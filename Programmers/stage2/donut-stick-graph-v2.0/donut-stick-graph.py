@@ -2,7 +2,7 @@ from typing import List, Dict
 import copy
 
 """
-그래프 엣지개수 이용
+그래프 순회
 """
 def solution(edges: List) -> List:
     node_set = set()
